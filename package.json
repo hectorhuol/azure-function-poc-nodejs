@@ -4,6 +4,7 @@
   "description": "Connecting to SQL DB using JS",
   "main": "index.js",
   "scripts": {
+    "pack": "funcpack pack .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
