@@ -2,15 +2,21 @@ var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://nosql-model.documents.azure.com:10255/?ssl=true';
 
 module.exports = function (context, req) {
-    MongoClient.connect(url, { 
-        auth: {
-            user: 'nosql-model',
-            password: '26Ou8SExdyvu0Rv0rKwL6Jqpf6UQy3Lb0aISklNE4Jl2aIFTPgrpnfNNuPFAGv2C0AIo9lhxiWLZgHgfyw2LWw=='
-        }
+    context.log('JavaScript HTTP trigger function processed a request to Get All Person from SQL Database');
+
+    MongoClient.connect(url, 
+        {
+            auth: {
+                user: 'nosql-model',
+                password: '26Ou8SExdyvu0Rv0rKwL6Jqpf6UQy3Lb0aISklNE4Jl2aIFTPgrpnfNNuPFAGv2C0AIo9lhxiWLZgHgfyw2LWw=='
+            }   
         },  function(err, client) {
 
         context.log('Connected successfully to server');
+
+        context.log('Getting DB...');
         var db = client.db('personsdb');
+        
         findPersons(context, db); 
     });
 
