@@ -1,7 +1,7 @@
 {
-  "name": "query-sql-db",
+  "name": "azure-function-poc-nodejs",
   "version": "1.0.0",
-  "description": "Connecting to SQL DB using JS",
+  "description": "Azure Functions PoC",
   "main": "index.js",
   "scripts": {
     "pack": "funcpack pack .",
@@ -9,11 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hectorhuol/azure-poc"
+    "url": "https://github.com/hectorhuol/azure-function-poc-nodejs"
   },
   "keywords": [
     "function",
     "sql-db",
+    "mongo-deb",
     "azure"
   ],
   "author": "hectorhuol",
