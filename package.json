@@ -1,0 +1,24 @@
+{
+  "name": "query-sql-db",
+  "version": "1.0.0",
+  "description": "Connecting to SQL DB using JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hectorhuol/azure-poc"
+  },
+  "keywords": [
+    "function",
+    "sql-db",
+    "azure"
+  ],
+  "author": "hectorhuol",
+  "license": "ISC",
+  "dependencies": {
+    "tedious": "^2.6.4",
+    "mongodb": "^3.1.3"
+  }
+}
