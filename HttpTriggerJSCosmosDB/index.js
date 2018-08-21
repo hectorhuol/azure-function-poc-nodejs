@@ -21,7 +21,7 @@ module.exports = function (context, req) {
                 context.res = {status: 500, body: "Unable to establish a connection."};
                 context.done();   
             } else {
-                context.log('Getting Persons');
+                context.log('Getting All Persons');
                 var response = { status: 200, body: JSON.stringify(result) };
                 context.res = response;
                 context.done();

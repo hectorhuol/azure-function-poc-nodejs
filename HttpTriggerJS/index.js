@@ -49,6 +49,8 @@ module.exports = function (context, req) {
                 context.done();
 
             } else {
+                context.log('Getting All Persons');
+
                 context.log(rowCount + ' rows');
 
                 response = { status: 200, body: JSON.stringify(result) };
