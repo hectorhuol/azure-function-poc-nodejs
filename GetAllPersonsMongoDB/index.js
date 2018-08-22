@@ -35,3 +35,8 @@ module.exports = function (context, req) {
         });                                
     }
 };
+
+function getEnvironmentVariable(name)
+{
+    return process.env[name];
+}
