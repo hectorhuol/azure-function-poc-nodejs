@@ -2,7 +2,7 @@ var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://nosql-model.documents.azure.com:10255/?ssl=true';
 
 module.exports = function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request to Get All Person from SQL Database');
+    context.log('JavaScript HTTP trigger function processed a request to Get All Person from SQL Database' + req);
 
     MongoClient.connect(url, 
         {
@@ -20,7 +20,8 @@ module.exports = function (context, req) {
         findPersons(context, db); 
     });
 
-    var findPersons = function(context, db) {
+    function findPersons(context, db)
+    {
         db.collection('persons').find().toArray(function(err, result) {
             if (err) {
                 context.log(err);        
@@ -32,7 +33,7 @@ module.exports = function (context, req) {
                 context.res = response;
                 context.done();
             } 
-        });                                
+        });            
     }
 };
 

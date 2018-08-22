@@ -23,5 +23,8 @@ project.lock.json
 .secrets
 appsettings.json
 local.settings.json
+test-results.xml
 
 /node_modules
+/coverage
+/.nyc_output

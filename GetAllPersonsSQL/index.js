@@ -2,7 +2,7 @@ var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 
 module.exports = function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request to Get All Person from SQL Database');
+    context.log('JavaScript HTTP trigger function processed a request to Get All Person from SQL Database' + req);
 
     var config = {
         userName: getEnvironmentVariable("SQLUser"),
@@ -39,6 +39,7 @@ module.exports = function (context, req) {
     function executeStatement() {
         var result = []; 
         var response;
+        var request;
 
         request = new Request("SELECT * FROM Person", function(err, rowCount) {
             if (err) {

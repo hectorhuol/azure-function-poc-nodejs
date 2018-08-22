@@ -4,8 +4,12 @@
   "description": "Azure Functions PoC",
   "main": "index.js",
   "scripts": {
+    "test": "mocha Tests/*.spec.js",
+    "debug": "mocha --inspect-brk Tests/*.spec.js",
+    "report": "nyc --reporter=lcov mocha Tests/*.spec.js --reporter mocha-junit-reporter",
     "pack": "funcpack pack .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "security-check": "nsp check",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -22,5 +26,20 @@
   "dependencies": {
     "tedious": "^2.6.4",
     "mongodb": "^3.1.3"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "chai": "^4.1.2",
+    "sinon": "^6.1.5",
+    "nyc": "^12.0.2",
+    "mocha-junit-reporter": "^1.18.0",
+    "azure-functions-pack": "^0.3.1",
+    "eslint": "^4.13.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "nsp": "^3.2.1"
   }
 }
