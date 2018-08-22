@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "d1be3181-f66e-451b-8962-5472981cccfb",
+		"name": "AzurePoC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetAllPersonsSQL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://azure-function-poc-nodejs.azurewebsites.net/api/GetAllPersonsSQL?code=LNysc//AEoRUrBZ882dFHbFgrVoQ2SPnMixVh4AnaqWaaU6Itcr/sw==",
+					"protocol": "https",
+					"host": [
+						"azure-function-poc-nodejs",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"GetAllPersonsSQL"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "LNysc//AEoRUrBZ882dFHbFgrVoQ2SPnMixVh4AnaqWaaU6Itcr/sw=="
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllPersonsMongoDB",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://azure-function-poc-nodejs.azurewebsites.net/api/GetAllPersonsMongoDB?code=xrAOdWRX86ZYAfsa9ms4u7/q72aiduYPV1FPObeTapi/wExhYmjcOA==",
+					"protocol": "https",
+					"host": [
+						"azure-function-poc-nodejs",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"GetAllPersonsMongoDB"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "xrAOdWRX86ZYAfsa9ms4u7/q72aiduYPV1FPObeTapi/wExhYmjcOA=="
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

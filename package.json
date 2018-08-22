@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha Tests/*.spec.js",
     "debug": "mocha --inspect-brk Tests/*.spec.js",
-    "report": "nyc --reporter=lcov mocha Tests/*.spec.js --reporter mocha-junit-reporter",
+    "report": "nyc --reporter=cobertura --reporter=html mocha Tests/*.spec.js --reporter mocha-junit-reporter",
     "pack": "funcpack pack .",
     "security-check": "nsp check",
     "lint": "eslint ."
