@@ -5,12 +5,12 @@ module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request to Get All Person from SQL Database');
 
     var config = {
-        userName: 'hectorhuol',
-        password: 'hedahuol-9889',
-        server: 'actionable-insights.database.windows.net',
+        userName: getEnvironmentVariable("SQLUser"),
+        password: getEnvironmentVariable("SQLPassword"),
+        server: getEnvironmentVariable("SQLServer"),
         options:
         {
-            database: 'relational_model',
+            database: getEnvironmentVariable("SQLDataBase"),
             encrypt: true
         }
     };    
@@ -67,3 +67,8 @@ module.exports = function (context, req) {
         connection.execSql(request);
     }
 };
+
+function getEnvironmentVariable(name)
+{
+    return process.env[name];
+}

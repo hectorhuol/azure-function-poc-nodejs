@@ -7,15 +7,15 @@ module.exports = function (context, req) {
     MongoClient.connect(url, 
         {
             auth: {
-                user: 'nosql-model',
-                password: '26Ou8SExdyvu0Rv0rKwL6Jqpf6UQy3Lb0aISklNE4Jl2aIFTPgrpnfNNuPFAGv2C0AIo9lhxiWLZgHgfyw2LWw=='
+                user: getEnvironmentVariable("MongoUser"),
+                password: getEnvironmentVariable("MongoPassword")
             }   
         },  function(err, client) {
 
         context.log('Connected successfully to server');
 
         context.log('Getting DB...');
-        var db = client.db('personsdb');
+        var db = client.db(getEnvironmentVariable("MongoDB"));
         
         findPersons(context, db); 
     });
