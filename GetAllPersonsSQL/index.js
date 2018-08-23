@@ -45,7 +45,7 @@ module.exports = function (context, req) {
             if (err) {
                 handleError(err);
             } else {
-                context.log('Getting All Persons');
+                context.log('Getting All Persons in SQL');
                 context.log(rowCount + ' rows');
                 response = { status: 200, body: JSON.stringify(result) };
                 context.res = response;
