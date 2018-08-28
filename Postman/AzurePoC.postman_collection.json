@@ -60,6 +60,116 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "APIGetAllPersonsSQL",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjdfWnVmMXR2a3dMeFlhSFMzcTZsVWpVWUlHdyIsImtpZCI6IjdfWnVmMXR2a3dMeFlhSFMzcTZsVWpVWUlHdyJ9.eyJhdWQiOiJjMzg3NDAxZC1jZWFmLTRlYzQtOGE5Yy1iNGRjZDA4YTk2OWYiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9jYzAwODg4OC1iZWRjLTQ1YTItYTU1Mi03YjMzMGRjOTlhYzQvIiwiaWF0IjoxNTM1NDg2MzM2LCJuYmYiOjE1MzU0ODYzMzYsImV4cCI6MTUzNTQ5MDIzNiwiYWNyIjoiMSIsImFpbyI6IkFVUUF1LzhJQUFBQXFVbW01VDkrQ0ViQ09kNmZzWDBCN3lKazZyZ0JqZGpaWFhCUXhNMktxd1JIZ3hGNDRVUU5laEcrYUhwU2IySFJjTk94NWRiU0dYNEprZDEwendyTUVBPT0iLCJhbXIiOlsicHdkIl0sImFwcGlkIjoiMzcyNWVmOWUtYmFmOC00YTc1LWFlZWQtZDFiNjU4YmI5NmYyIiwiYXBwaWRhY3IiOiIxIiwiZW1haWwiOiJoZWRhaHVvbF85OEBob3RtYWlsLmNvbSIsImZhbWlseV9uYW1lIjoiSHVydGFkbyBPbGF5YSIsImdpdmVuX25hbWUiOiJIZWN0b3IgRGFuaWxvIiwiaWRwIjoibGl2ZS5jb20iLCJpcGFkZHIiOiIyMDAuMzEuMTUuMjM4IiwibmFtZSI6IkhlY3RvciBEYW5pbG8gSHVydGFkbyBPbGF5YSIsIm9pZCI6IjhjYjZhMjc5LThkZWEtNDFkNS04MjJkLWQ5YjIwNGYzNGE1NSIsInNjcCI6InVzZXJfaW1wZXJzb25hdGlvbiIsInN1YiI6InR4azdJSnlISFZVUFBEQlFKRlh5eDd3Wkgwd215cl9vT0M1bUI5engwMzgiLCJ0aWQiOiJjYzAwODg4OC1iZWRjLTQ1YTItYTU1Mi03YjMzMGRjOTlhYzQiLCJ1bmlxdWVfbmFtZSI6ImxpdmUuY29tI2hlZGFodW9sXzk4QGhvdG1haWwuY29tIiwidXRpIjoib3RMLV9mUGVGay1WSTZ3bUl5M0FBQSIsInZlciI6IjEuMCJ9.VAgwwc2ejMJlkY_GiqRyLVNtCwn2lIyGrIOCGQJV7ETMB29tCXqwcPMIay2gVm8vC7AYWGgCZZLysIiNGTR1-DSTr5kpYBaxZYR_3Ns5_dc9Xf06DTCR164rfdNFwg1Gn_JzLK-cq7UGWHMx3nYfKOz2ZNGNLzgWRJp70mlmamWK8B5gg9D6cp6fx2tLRm5zaFAmUhr1p3CKFcQXgupo4s-YGwCj4fTkLDyNN5gvbTjlm6B9VNvwCzkzicVmXNnOHpQASqNbdA1QXiSmygbzR4sAfyN-MVMpOs38AFdhehtWUINS30o1p-1l7TlA_a-jqH3AjmCaEiMX15gkebG7hw",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"value": "true"
+					},
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "bfacb4901fd040188481d149070ea25e"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "https://azure-api-management-poc.azure-api.net/sql/persons",
+					"protocol": "https",
+					"host": [
+						"azure-api-management-poc",
+						"azure-api",
+						"net"
+					],
+					"path": [
+						"sql",
+						"persons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "APIGetAllPersonsMongoDB",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjdfWnVmMXR2a3dMeFlhSFMzcTZsVWpVWUlHdyIsImtpZCI6IjdfWnVmMXR2a3dMeFlhSFMzcTZsVWpVWUlHdyJ9.eyJhdWQiOiJjMzg3NDAxZC1jZWFmLTRlYzQtOGE5Yy1iNGRjZDA4YTk2OWYiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9jYzAwODg4OC1iZWRjLTQ1YTItYTU1Mi03YjMzMGRjOTlhYzQvIiwiaWF0IjoxNTM1NDg2MzkwLCJuYmYiOjE1MzU0ODYzOTAsImV4cCI6MTUzNTQ5MDI5MCwiYWNyIjoiMSIsImFpbyI6IkFVUUF1LzhJQUFBQTNRWURIZ1ZRaDJMcHJ5U3RzZlN4YmxmZmhhcjNhdnh3SXZ4Ujl6aWdMdWx4V0NoU2Z4cFJpL2ZqSWtWbmxSNEorU2E1SXk4TCtSSXpoVXZhcys3TXlBPT0iLCJhbXIiOlsicHdkIl0sImFwcGlkIjoiMzcyNWVmOWUtYmFmOC00YTc1LWFlZWQtZDFiNjU4YmI5NmYyIiwiYXBwaWRhY3IiOiIxIiwiZW1haWwiOiJoZWRhaHVvbF85OEBob3RtYWlsLmNvbSIsImZhbWlseV9uYW1lIjoiSHVydGFkbyBPbGF5YSIsImdpdmVuX25hbWUiOiJIZWN0b3IgRGFuaWxvIiwiaWRwIjoibGl2ZS5jb20iLCJpcGFkZHIiOiIyMDAuMzEuMTUuMjM4IiwibmFtZSI6IkhlY3RvciBEYW5pbG8gSHVydGFkbyBPbGF5YSIsIm9pZCI6IjhjYjZhMjc5LThkZWEtNDFkNS04MjJkLWQ5YjIwNGYzNGE1NSIsInNjcCI6InVzZXJfaW1wZXJzb25hdGlvbiIsInN1YiI6InR4azdJSnlISFZVUFBEQlFKRlh5eDd3Wkgwd215cl9vT0M1bUI5engwMzgiLCJ0aWQiOiJjYzAwODg4OC1iZWRjLTQ1YTItYTU1Mi03YjMzMGRjOTlhYzQiLCJ1bmlxdWVfbmFtZSI6ImxpdmUuY29tI2hlZGFodW9sXzk4QGhvdG1haWwuY29tIiwidXRpIjoicWNSekppalBUVU83SzZFcWF2MHhBQSIsInZlciI6IjEuMCJ9.jmbE65LDIdnYI1Bq6jihgK1LwAEaDhTtJEfgs6MWcYZJYzBp45pB9_4rCu6BKaSVdyF0CWrOadhUz6AKhSxdkYf6YtQpRkzVY7xqS49M1RNoelm7wvsqZUXEdNk3gPiRiLKAbjy6BUAo9XvBZmTVZMpN_c-kqZ_sui4tV12Okb7yptg5nCXegM3fDcpz2eGfwb5ypurQl7f9AkQlwV1WQC4Ol2Nwj9mNE4m8dp2Y-MwYgqT_h8VVuhYxijM6-Jaj2PK8hIe8cfjIFJorja9RhqVeWbQ5j0ozjzIioERfBKSxCIeZulMPPVxHO9p32LBy6f_07tzi25rsiooE4z_YYA",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"value": "true"
+					},
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "bfacb4901fd040188481d149070ea25e"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "https://azure-api-management-poc.azure-api.net/mongo/persons",
+					"protocol": "https",
+					"host": [
+						"azure-api-management-poc",
+						"azure-api",
+						"net"
+					],
+					"path": [
+						"mongo",
+						"persons"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
