@@ -1,0 +1,171 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "serverfarms_name": {
+            "type": "String",
+            "minLength": 3
+        },
+        "functionapp_name": {
+            "type": "String",
+            "minLength": 3
+        },
+        "storage_name": {
+            "type": "String",
+            "minLength": 3
+        },
+        "components_name": {
+            "type": "String",
+            "minLength": 3
+        },
+        "hostNameBindings_functionapp_name": {
+            "type": "String",
+            "minLength": 3
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/microsoft.insights/components/azure-function-poc-nodejs-arm'.",
+            "type": "microsoft.insights/components",
+            "kind": "web",
+            "name": "[parameters('components_name')]",
+            "apiVersion": "2015-05-01",
+            "location": "southcentralus",
+            "tags": {
+                "hidden-link:/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Web/sites/azure-function-poc-nodejs-arm": "Resource"
+            },
+            "scale": null,
+            "properties": {
+                "Application_Type": "web",
+                "Flow_Type": null,
+                "Request_Source": "IbizaWebAppExtensionCreate",
+                "HockeyAppId": null,
+                "SamplingPercentage": null
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Storage/storageAccounts/azurefuncpoc2018'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storage_name')]",
+            "apiVersion": "2018-03-01-preview",
+            "location": "centralus",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": false,
+                "encryption": {
+                    "services": {
+                        "file": {
+                            "enabled": true
+                        },
+                        "blob": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Web/serverfarms/CentralUSPlan'.",
+            "type": "Microsoft.Web/serverfarms",
+            "sku": {
+                "name": "Y1",
+                "tier": "Dynamic",
+                "size": "Y1",
+                "family": "Y",
+                "capacity": 0
+            },
+            "kind": "functionapp",
+            "name": "[parameters('serverfarms_name')]",
+            "apiVersion": "2016-09-01",
+            "location": "Central US",
+            "scale": null,
+            "properties": {
+                "name": "[parameters('serverfarms_name')]",
+                "workerTierName": null,
+                "adminSiteName": null,
+                "hostingEnvironmentProfile": null,
+                "perSiteScaling": false,
+                "reserved": false,
+                "targetWorkerCount": 0,
+                "targetWorkerSizeId": 0
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Web/sites/azure-function-poc-nodejs-arm'.",
+            "type": "Microsoft.Web/sites",
+            "kind": "functionapp",
+            "name": "[parameters('functionapp_name')]",
+            "apiVersion": "2016-08-01",
+            "location": "Central US",
+            "scale": null,
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(parameters('functionapp_name'),'.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "[concat(parameters('functionapp_name'),'.scm.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_name'))]",
+                "reserved": false,
+                "siteConfig": null,
+                "scmSiteAlsoStopped": false,
+                "hostingEnvironmentProfile": null,
+                "clientAffinityEnabled": false,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 1536,
+                "dailyMemoryTimeQuota": 0,
+                "cloningInfo": null
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Web/sites/azure-function-poc-nodejs-arm/hostNameBindings/azure-function-poc-nodejs-arm.azurewebsites.net'.",
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "name": "[concat(parameters('sites_azure_function_poc_nodejs_arm_name'), '/', parameters('hostNameBindings_functionapp_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "Central US",
+            "scale": null,
+            "properties": {
+                "siteName": "azure-function-poc-nodejs-arm",
+                "domainId": null,
+                "hostNameType": "Verified"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('functionapp_name'))]"
+            ]
+        }
+    ]
+}
