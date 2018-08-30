@@ -21,6 +21,14 @@
         "hostNameBindings_functionapp_name": {
             "type": "String",
             "minLength": 3
+        },
+        "client_id": {
+            "type": "String",
+            "minLength": 3
+        },
+        "tenant_id": {
+            "type": "String",
+            "minLength": 3
         }
     },
     "variables": {
@@ -117,6 +125,7 @@
             "apiVersion": "2016-08-01",
             "location": "Central US",
             "scale": null,
+            "resources": [],
             "properties": {
                 "enabled": true,
                 "hostNameSslStates": [
@@ -190,6 +199,23 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_name'))]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('functionapp_name'), '/authsettings')]",
+            "apiVersion": "2016-08-01",
+            "type": "Microsoft.Web/sites/config",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "enabled": true,
+                "unauthenticatedClientAction": "RedirectToLoginPage",
+                "tokenStoreEnabled": true,
+                "defaultProvider": "AzureActiveDirectory",
+                "clientId": "[parameters('client_id')]",
+                "issuer": "[concat('https://sts.windows.net/', parameters('tenant_id'), '/')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('functionapp_name'))]"
             ]
         },
         {
