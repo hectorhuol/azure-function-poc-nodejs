@@ -14,6 +14,10 @@
             "type": "String",
             "minLength": 3
         },
+        "storage_key": {
+            "type": "String",
+            "minLength": 3
+        },
         "components_name": {
             "type": "String",
             "minLength": 3
@@ -137,7 +141,50 @@
                 ],
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_name'))]",
                 "reserved": false,
-                "siteConfig": null,
+                "siteConfig": {
+                    "appSettings": [
+                      {
+                        "name": "AzureWebJobsDashboard",
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(parameters('storage_key'),'2015-05-01-preview').key1)]"
+                      },
+                      {
+                        "name": "AzureWebJobsStorage",
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(parameters('storage_key'),'2015-05-01-preview').key1)]"
+                      },
+                      {
+                        "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(parameters('storage_key'),'2015-05-01-preview').key1)]"
+                      },
+                      {
+                        "name": "WEBSITE_CONTENTSHARE",
+                        "value": "[toLower(parameters('functionapp_name'))]"
+                      },
+                      {
+                        "name": "FUNCTIONS_EXTENSION_VERSION",
+                        "value": "~1"
+                      },
+                      {
+                        "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                        "value": "8.11.1"
+                      },
+                      {
+                        "name": "AzureWebJobsSecretStorageType",
+                        "value": "Blob"
+                      },
+                      {
+                        "name": "FUNCTION_APP_EDIT_MODE",
+                        "value": "readonly"
+                      },
+                      {
+                        "name": "FUNCTIONS_EXTENSION_VERSION",
+                        "value": "beta"
+                      },
+                      {
+                        "name": "MSDEPLOY_RENAME_LOCKED_FILES",
+                        "value": "1"
+                      }
+                    ]
+                  },
                 "scmSiteAlsoStopped": false,
                 "hostingEnvironmentProfile": null,
                 "clientAffinityEnabled": false,
