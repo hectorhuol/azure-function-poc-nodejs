@@ -211,7 +211,8 @@
                 "unauthenticatedClientAction": "RedirectToLoginPage",
                 "tokenStoreEnabled": false,
                 "defaultProvider": "AzureActiveDirectory",
-                "name": "azure-function-poc-nodejs"
+                "clientId": "[parameters('client_id')]",
+                "issuer": "[concat('https://sts.windows.net/', parameters('tenant_id'), '/')]"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('functionapp_name'))]"
