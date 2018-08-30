@@ -16,6 +16,12 @@
         },
         "hostNameBindings_functionapp_name": {
             "value": null
+        },
+        "client_id": {
+            "value": null
+        },
+        "tenant_id": {
+            "value": null
         }
     }
 }
