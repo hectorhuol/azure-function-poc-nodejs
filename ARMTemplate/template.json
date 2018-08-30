@@ -158,10 +158,6 @@
                         "value": "[toLower(parameters('functionapp_name'))]"
                       },
                       {
-                        "name": "FUNCTIONS_EXTENSION_VERSION",
-                        "value": "~1"
-                      },
-                      {
                         "name": "WEBSITE_NODE_DEFAULT_VERSION",
                         "value": "8.11.1"
                       },
