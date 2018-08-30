@@ -59,7 +59,7 @@
             "kind": "Storage",
             "name": "[parameters('storage_name')]",
             "apiVersion": "2018-03-01-preview",
-            "location": "centralus",
+            "location": "[resourceGroup().location]",
             "tags": {},
             "scale": null,
             "properties": {
