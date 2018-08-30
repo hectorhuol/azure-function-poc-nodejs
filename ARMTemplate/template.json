@@ -154,7 +154,7 @@
         {
             "comments": "Generalized from resource: '/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Web/sites/azure-function-poc-nodejs-arm/hostNameBindings/azure-function-poc-nodejs-arm.azurewebsites.net'.",
             "type": "Microsoft.Web/sites/hostNameBindings",
-            "name": "[concat(parameters('sites_azure_function_poc_nodejs_arm_name'), '/', parameters('hostNameBindings_functionapp_name'))]",
+            "name": "[concat(parameters('functionapp_name'), '/', parameters('hostNameBindings_functionapp_name'))]",
             "apiVersion": "2016-08-01",
             "location": "Central US",
             "scale": null,
