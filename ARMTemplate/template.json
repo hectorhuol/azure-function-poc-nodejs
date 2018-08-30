@@ -14,10 +14,6 @@
             "type": "String",
             "minLength": 3
         },
-        "storage_key": {
-            "type": "String",
-            "minLength": 3
-        },
         "components_name": {
             "type": "String",
             "minLength": 3
@@ -27,7 +23,9 @@
             "minLength": 3
         }
     },
-    "variables": {},
+    "variables": {
+        "storage_account_id": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', parameters('storage_name'))]"
+    },
     "resources": [
         {
             "comments": "Generalized from resource: '/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/microsoft.insights/components/azure-function-poc-nodejs-arm'.",
@@ -145,15 +143,15 @@
                     "appSettings": [
                       {
                         "name": "AzureWebJobsDashboard",
-                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(parameters('storage_key'),'2015-05-01-preview').key1)]"
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(variables('storage_account_id'),'2015-05-01-preview').key1)]"
                       },
                       {
                         "name": "AzureWebJobsStorage",
-                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(parameters('storage_key'),'2015-05-01-preview').key1)]"
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(variables('storage_account_id'),'2015-05-01-preview').key1)]"
                       },
                       {
                         "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(parameters('storage_key'),'2015-05-01-preview').key1)]"
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(variables('storage_account_id'),'2015-05-01-preview').key1)]"
                       },
                       {
                         "name": "WEBSITE_CONTENTSHARE",
