@@ -41,7 +41,7 @@
     },
     "variables": {
         "storage_account_id": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', parameters('storage_name'))]",
-        "slot_functionapp_name":"[concat(parameters('functionapp_name'), '-', parameters('slot_name'))]",
+        "slot_functionapp_name":"[concat(parameters('functionapp_name'), '-', parameters('slot_name'))]"
     },
     "resources": [
         {
@@ -49,7 +49,7 @@
             "kind": "web",
             "name": "[parameters('components_name')]",
             "apiVersion": "2015-05-01",
-            "location": "[resourceGroup().location]",
+            "location": "southcentralus",
             "tags": {
                 "hidden-link:/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Web/sites/azure-function-poc-nodejs-arm": "Resource"
             },
