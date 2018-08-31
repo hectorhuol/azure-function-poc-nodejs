@@ -3,45 +3,53 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "serverfarms_name": {
-            "type": "String",
+            "type": "string",
             "minLength": 3
         },
         "functionapp_name": {
-            "type": "String",
+            "type": "string",
             "minLength": 3
         },
         "storage_name": {
-            "type": "String",
+            "type": "string",
             "minLength": 3
         },
         "components_name": {
-            "type": "String",
+            "type": "string",
             "minLength": 3
         },
         "hostNameBindings_functionapp_name": {
-            "type": "String",
+            "type": "string",
             "minLength": 3
         },
         "client_id": {
-            "type": "String",
+            "type": "string",
             "minLength": 3
         },
         "tenant_id": {
-            "type": "String",
+            "type": "string",
+            "minLength": 3
+        },
+        "slot_name": {
+            "type": "string",
+            "minLength": 3
+        },
+        "hostNameBindings_slot_functionapp_name": {
+            "type": "string",
             "minLength": 3
         }
     },
     "variables": {
-        "storage_account_id": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', parameters('storage_name'))]"
+        "storage_account_id": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', parameters('storage_name'))]",
+        "slot_functionapp_name":"[concat(parameters('functionapp_name'), '-', parameters('slot_name'))]",
     },
     "resources": [
         {
-            "comments": "Generalized from resource: '/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/microsoft.insights/components/azure-function-poc-nodejs-arm'.",
-            "type": "microsoft.insights/components",
+            "type": "Microsoft.Insights/components",
             "kind": "web",
             "name": "[parameters('components_name')]",
             "apiVersion": "2015-05-01",
-            "location": "southcentralus",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "hidden-link:/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Web/sites/azure-function-poc-nodejs-arm": "Resource"
             },
@@ -56,7 +64,6 @@
             "dependsOn": []
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Storage/storageAccounts/azurefuncpoc2018'.",
             "type": "Microsoft.Storage/storageAccounts",
             "sku": {
                 "name": "Standard_LRS",
@@ -91,7 +98,6 @@
             "dependsOn": []
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Web/serverfarms/CentralUSPlan'.",
             "type": "Microsoft.Web/serverfarms",
             "sku": {
                 "name": "Y1",
@@ -103,7 +109,7 @@
             "kind": "functionapp",
             "name": "[parameters('serverfarms_name')]",
             "apiVersion": "2016-09-01",
-            "location": "Central US",
+            "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
                 "name": "[parameters('serverfarms_name')]",
@@ -118,12 +124,11 @@
             "dependsOn": []
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Web/sites/azure-function-poc-nodejs-arm'.",
             "type": "Microsoft.Web/sites",
             "kind": "functionapp",
             "name": "[parameters('functionapp_name')]",
             "apiVersion": "2016-08-01",
-            "location": "Central US",
+            "location": "[resourceGroup().location]",
             "scale": null,
             "resources": [],
             "properties": {
@@ -219,11 +224,10 @@
             ]
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Web/sites/azure-function-poc-nodejs-arm/hostNameBindings/azure-function-poc-nodejs-arm.azurewebsites.net'.",
             "type": "Microsoft.Web/sites/hostNameBindings",
             "name": "[concat(parameters('functionapp_name'), '/', parameters('hostNameBindings_functionapp_name'))]",
             "apiVersion": "2016-08-01",
-            "location": "Central US",
+            "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
                 "siteName": "azure-function-poc-nodejs-arm",
@@ -232,6 +236,124 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('functionapp_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/slots",
+            "kind": "functionapp",
+            "name": "[variables('slot_functionapp_name')]",
+            "apiVersion": "2016-08-01",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "resources": [],
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(variables('slot_functionapp_name'),'.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "[concat(variables('slot_functionapp_name'),'.scm.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_name'))]",
+                "reserved": false,
+                "siteConfig": {
+                    "appSettings": [
+                      {
+                        "name": "AzureWebJobsDashboard",
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(variables('storage_account_id'),'2015-05-01-preview').key1)]"
+                      },
+                      {
+                        "name": "AzureWebJobsStorage",
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(variables('storage_account_id'),'2015-05-01-preview').key1)]"
+                      },
+                      {
+                        "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(variables('storage_account_id'),'2015-05-01-preview').key1)]"
+                      },
+                      {
+                        "name": "WEBSITE_CONTENTSHARE",
+                        "value": "[toLower(concat(variables('slot_functionapp_name')))]"
+                      },
+                      {
+                        "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                        "value": "8.11.1"
+                      },
+                      {
+                        "name": "AzureWebJobsSecretStorageType",
+                        "value": "Blob"
+                      },
+                      {
+                        "name": "FUNCTION_APP_EDIT_MODE",
+                        "value": "readonly"
+                      },
+                      {
+                        "name": "FUNCTIONS_EXTENSION_VERSION",
+                        "value": "beta"
+                      },
+                      {
+                        "name": "MSDEPLOY_RENAME_LOCKED_FILES",
+                        "value": "1"
+                      }
+                    ]
+                  },
+                "scmSiteAlsoStopped": false,
+                "hostingEnvironmentProfile": null,
+                "clientAffinityEnabled": false,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 1536,
+                "dailyMemoryTimeQuota": 0,
+                "cloningInfo": null
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_name'))]",
+				"[resourceId('Microsoft.Web/sites', parameters('functionapp_name'))]"
+            ]
+        },
+        {
+            "name": "[concat(variables('slot_functionapp_name'), '/authsettings')]",
+            "apiVersion": "2016-08-01",
+            "type": "Microsoft.Web/sites/slots/config",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "enabled": true,
+                "unauthenticatedClientAction": "RedirectToLoginPage",
+                "tokenStoreEnabled": false,
+                "defaultProvider": "AzureActiveDirectory",
+                "clientId": "[parameters('client_id')]",
+                "issuer": "[concat('https://sts.windows.net/', parameters('tenant_id'), '/')]"
+            },
+            "dependsOn": [
+			    "[resourceId('Microsoft.Web/sites', parameters('functionapp_name'))]",
+                "[resourceId('Microsoft.Web/sites/slots', variables('slot_functionapp_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/hostNameBindings",
+            "name": "[concat(variables('slot_functionapp_name'), '/', parameters('hostNameBindings_slot_functionapp_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "properties": {
+                "siteName": "[variables('slot_functionapp_name')]",
+                "domainId": null,
+                "hostNameType": "Verified"
+            },
+            "dependsOn": [
+				"[resourceId('Microsoft.Web/sites', parameters('functionapp_name'))]",
+                "[resourceId('Microsoft.Web/sites/slots', variables('slot_functionapp_name'))]"
             ]
         }
     ]

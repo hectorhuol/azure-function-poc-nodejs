@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "serverfarms_name": {
+            "value": null
+        },
+        "functionapp_name": {
+            "value": null
+        },
+        "storage_name": {
+            "value": null
+        },
+        "components_name": {
+            "value": null
+        },
+        "hostNameBindings_functionapp_name": {
+            "value": null
+        },
+        "client_id": {
+            "value": null
+        },
+        "tenant_id": {
+            "value": null
+        },
+        "slot_name": {
+            "value": null
+        },
+        "hostNameBindings_slot_functionapp_name": {
+            "value": null
+        }
+    }
+}

@@ -1,0 +1,233 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "serverfarms_name": {
+            "type": "string",
+            "minLength": 3
+        },
+        "functionapp_name": {
+            "type": "string",
+            "minLength": 3
+        },
+        "storage_name": {
+            "type": "string",
+            "minLength": 3
+        },
+        "components_name": {
+            "type": "string",
+            "minLength": 3
+        },
+        "hostNameBindings_functionapp_name": {
+            "type": "string",
+            "minLength": 3
+        },
+        "client_id": {
+            "type": "string",
+            "minLength": 3
+        },
+        "tenant_id": {
+            "type": "string",
+            "minLength": 3
+        }
+    },
+    "variables": {
+        "storage_account_id": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', parameters('storage_name'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Insights/components",
+            "kind": "web",
+            "name": "[parameters('components_name')]",
+            "apiVersion": "2015-05-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "hidden-link:/subscriptions/09ec77c7-a5c4-441c-bc3b-f1b0fe9ec903/resourceGroups/azureFunctionPoCNodejs/providers/Microsoft.Web/sites/azure-function-poc-nodejs-arm": "Resource"
+            },
+            "scale": null,
+            "properties": {
+                "Application_Type": "web",
+                "Flow_Type": null,
+                "Request_Source": "IbizaWebAppExtensionCreate",
+                "HockeyAppId": null,
+                "SamplingPercentage": null
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storage_name')]",
+            "apiVersion": "2018-03-01-preview",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": false,
+                "encryption": {
+                    "services": {
+                        "file": {
+                            "enabled": true
+                        },
+                        "blob": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "sku": {
+                "name": "Y1",
+                "tier": "Dynamic",
+                "size": "Y1",
+                "family": "Y",
+                "capacity": 0
+            },
+            "kind": "functionapp",
+            "name": "[parameters('serverfarms_name')]",
+            "apiVersion": "2016-09-01",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "properties": {
+                "name": "[parameters('serverfarms_name')]",
+                "workerTierName": null,
+                "adminSiteName": null,
+                "hostingEnvironmentProfile": null,
+                "perSiteScaling": false,
+                "reserved": false,
+                "targetWorkerCount": 0,
+                "targetWorkerSizeId": 0
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "kind": "functionapp",
+            "name": "[parameters('functionapp_name')]",
+            "apiVersion": "2016-08-01",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "resources": [],
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(parameters('functionapp_name'),'.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "[concat(parameters('functionapp_name'),'.scm.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_name'))]",
+                "reserved": false,
+                "siteConfig": {
+                    "appSettings": [
+                      {
+                        "name": "AzureWebJobsDashboard",
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(variables('storage_account_id'),'2015-05-01-preview').key1)]"
+                      },
+                      {
+                        "name": "AzureWebJobsStorage",
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(variables('storage_account_id'),'2015-05-01-preview').key1)]"
+                      },
+                      {
+                        "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_name'), ';AccountKey=', listKeys(variables('storage_account_id'),'2015-05-01-preview').key1)]"
+                      },
+                      {
+                        "name": "WEBSITE_CONTENTSHARE",
+                        "value": "[toLower(parameters('functionapp_name'))]"
+                      },
+                      {
+                        "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                        "value": "8.11.1"
+                      },
+                      {
+                        "name": "AzureWebJobsSecretStorageType",
+                        "value": "Blob"
+                      },
+                      {
+                        "name": "FUNCTION_APP_EDIT_MODE",
+                        "value": "readonly"
+                      },
+                      {
+                        "name": "FUNCTIONS_EXTENSION_VERSION",
+                        "value": "beta"
+                      },
+                      {
+                        "name": "MSDEPLOY_RENAME_LOCKED_FILES",
+                        "value": "1"
+                      }
+                    ]
+                  },
+                "scmSiteAlsoStopped": false,
+                "hostingEnvironmentProfile": null,
+                "clientAffinityEnabled": false,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 1536,
+                "dailyMemoryTimeQuota": 0,
+                "cloningInfo": null
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_name'))]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('functionapp_name'), '/authsettings')]",
+            "apiVersion": "2016-08-01",
+            "type": "Microsoft.Web/sites/config",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "enabled": true,
+                "unauthenticatedClientAction": "RedirectToLoginPage",
+                "tokenStoreEnabled": false,
+                "defaultProvider": "AzureActiveDirectory",
+                "clientId": "[parameters('client_id')]",
+                "issuer": "[concat('https://sts.windows.net/', parameters('tenant_id'), '/')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('functionapp_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "name": "[concat(parameters('functionapp_name'), '/', parameters('hostNameBindings_functionapp_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "properties": {
+                "siteName": "azure-function-poc-nodejs-arm",
+                "domainId": null,
+                "hostNameType": "Verified"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('functionapp_name'))]"
+            ]
+        }
+    ]
+}
