@@ -63,7 +63,7 @@ describe('GetAllPersonsMongoDB function', () => {
 
         GetAllPersonsMongoDB(context, req);
         
-        expect(context.res.body).to.equal(JSON.stringify(response), "Result is wrong!!");
+        expect(context.res.body.data).to.equal(JSON.stringify(response), "Result is wrong!!");
         expect(context.done.called).to.be.true;
         expect(mockDbCollection.db.called).to.be.true;
         sinon.assert.calledOnce(mongoClientStub);
