@@ -2,7 +2,7 @@ var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://nosql-model.documents.azure.com:10255/?ssl=true';
 
 module.exports = function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request to Get All Person from SQL Database' + req);
+    context.log('JavaScript HTTP trigger function processed a request to Get All Person from Mongo Database' + req);
 
     MongoClient.connect(url, 
         {
