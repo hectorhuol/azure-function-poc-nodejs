@@ -338,7 +338,7 @@
             },
             "dependsOn": [
 			    "[resourceId('Microsoft.Web/sites', parameters('functionapp_name'))]",
-                "[resourceId('Microsoft.Web/sites/slots', variables('slot_functionapp_name'))]"
+                "[resourceId('Microsoft.Web/sites/slots', parameters('functionapp_name'), parameters('slot_name'))]"
             ]
         },
         {
@@ -354,7 +354,7 @@
             },
             "dependsOn": [
 				"[resourceId('Microsoft.Web/sites', parameters('functionapp_name'))]",
-                "[resourceId('Microsoft.Web/sites/slots', variables('slot_functionapp_name'))]"
+                "[resourceId('Microsoft.Web/sites/slots', parameters('functionapp_name'), parameters('slot_name'))]"
             ]
         }
     ]
