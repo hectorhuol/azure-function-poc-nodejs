@@ -41,7 +41,8 @@
     },
     "variables": {
         "storage_account_id": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', parameters('storage_name'))]",
-        "slot_functionapp_name":"[concat(parameters('functionapp_name'), '-', parameters('slot_name'))]"
+        "slot_functionapp_name":"[concat(parameters('functionapp_name'), '-', parameters('slot_name'))]",
+        "slot_functionapp_name_resource":"[concat(parameters('functionapp_name'), '/', parameters('slot_name'))]"
     },
     "resources": [
         {
@@ -241,7 +242,7 @@
         {
             "type": "Microsoft.Web/sites/slots",
             "kind": "functionapp",
-            "name": "[variables('slot_functionapp_name')]",
+            "name": "[variables('slot_functionapp_name_resource')]",
             "apiVersion": "2016-08-01",
             "location": "[resourceGroup().location]",
             "scale": null,
@@ -323,7 +324,7 @@
             ]
         },
         {
-            "name": "[concat(variables('slot_functionapp_name'), '/authsettings')]",
+            "name": "[concat(variables('slot_functionapp_name_resource'), '/authsettings')]",
             "apiVersion": "2016-08-01",
             "type": "Microsoft.Web/sites/slots/config",
             "location": "[resourceGroup().location]",
@@ -342,7 +343,7 @@
         },
         {
             "type": "Microsoft.Web/sites/slots/hostNameBindings",
-            "name": "[concat(variables('slot_functionapp_name'), '/', parameters('hostNameBindings_slot_functionapp_name'))]",
+            "name": "[concat(variables('slot_functionapp_name_resource'), '/', parameters('hostNameBindings_slot_functionapp_name'))]",
             "apiVersion": "2016-08-01",
             "location": "[resourceGroup().location]",
             "scale": null,
