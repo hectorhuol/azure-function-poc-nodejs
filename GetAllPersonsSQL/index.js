@@ -38,17 +38,21 @@ module.exports = function (context, req) {
 
     function executeStatement() {
         var result = []; 
-        var response;
+        var response = {
+            data:null,
+            message:""
+        };
         var request;
-
+        
         request = new Request("SELECT * FROM Person", function(err, rowCount) {
             if (err) {
                 handleError(err);
             } else {
                 context.log('Getting All Persons in SQL');
                 context.log(rowCount + ' rows');
-                response = { status: 200, body: JSON.stringify(result) };
-                context.res = response;
+                response.data = JSON.stringify(result);
+                response.message = "Here are all the Persons in SQL DB";
+                context.res = { status: 200, body: JSON.stringify(response) };
                 context.done();                
             }
         });

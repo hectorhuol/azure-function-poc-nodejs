@@ -29,8 +29,13 @@ module.exports = function (context, req) {
                 context.done();   
             } else {
                 context.log('Getting All Persons');
-                var response = { status: 200, body: JSON.stringify(result) };
-                context.res = response;
+                var response = {
+                    data:null,
+                    message:""
+                };
+                response.data = JSON.stringify(result);
+                response.message = "Here are all the Persons in Mongo DB";
+                context.res = { status: 200, body: JSON.stringify(response) };
                 context.done();
             } 
         });            
