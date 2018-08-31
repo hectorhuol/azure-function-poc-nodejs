@@ -35,7 +35,7 @@ module.exports = function (context, req) {
                 };
                 response.data = JSON.stringify(result);
                 response.message = "Here are all the Persons in Mongo DB";
-                context.res = { status: 200, body: response };
+                context.res = { status: 200, body: JSON.stringify(response) };
                 context.done();
             } 
         });            

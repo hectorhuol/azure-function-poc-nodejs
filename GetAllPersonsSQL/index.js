@@ -52,7 +52,7 @@ module.exports = function (context, req) {
                 context.log(rowCount + ' rows');
                 response.data = JSON.stringify(result);
                 response.message = "Here are all the Persons in SQL DB";
-                context.res = { status: 200, body: response };
+                context.res = { status: 200, body: JSON.stringify(response)};
                 context.done();                
             }
         });
