@@ -33,7 +33,7 @@ module.exports = function (context, req) {
                     data:null,
                     message:""
                 };
-                response.data = JSON.stringify(result);
+                response.data = result;
                 response.message = "Here are all the Persons in Mongo DB";
                 context.res = { status: 200, body: JSON.stringify(response) };
                 context.done();

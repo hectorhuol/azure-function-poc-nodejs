@@ -50,7 +50,7 @@ module.exports = function (context, req) {
             } else {
                 context.log('Getting All Persons in SQL');
                 context.log(rowCount + ' rows');
-                response.data = JSON.stringify(result);
+                response.data = result;
                 response.message = "Here are all the Persons in SQL DB";
                 context.res = { status: 200, body: JSON.stringify(response)};
                 context.done();                
