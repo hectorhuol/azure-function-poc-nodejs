@@ -1,48 +1,18 @@
-var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://nosql-model.documents.azure.com:10255/?ssl=true';
+var repository = require('./repository/person-repository');
 
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request to Get All Person from Mongo Database' + req);
 
-    MongoClient.connect(url, 
-        {
-            auth: {
-                user: getEnvironmentVariable("MongoUser"),
-                password: getEnvironmentVariable("MongoPassword")
-            }   
-        },  function(err, client) {
-
-        context.log('Connected successfully to server');
-
-        context.log('Getting DB...');
-        var db = client.db(getEnvironmentVariable("MongoDB"));
-        
-        findPersons(context, db); 
-    });
-
-    function findPersons(context, db)
-    {
-        db.collection('persons').find().toArray(function(err, result) {
-            if (err) {
-                context.log(err);        
-                context.res = {status: 500, body: "Unable to establish a connection."};
-                context.done();   
-            } else {
-                context.log('Getting All Persons');
-                var response = {
-                    data:null,
-                    message:""
-                };
-                response.data = result;
-                response.message = "Here are all the Persons in Mongo DB";
-                context.res = { status: 200, body: JSON.stringify(response) };
-                context.done();
-            } 
-        });            
+    var response = {
+        data:null,
+        message:null
     }
-};
 
-function getEnvironmentVariable(name)
-{
-    return process.env[name];
-}
+    repository.queryAll(context, function(data){
+        context.log('Getting All Persons in MongoDB');
+        response.data = data;
+        response.message = "Here are all the Persons in Mongo DB";
+        context.res = { status: 200, body: JSON.stringify(response) };
+        context.done();
+    });   
+};
